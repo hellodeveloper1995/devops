@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
+const port = process.env.PORT;
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
@@ -15,17 +16,17 @@ app.get('/health', (req, res) => {
 
 console.log('Connceting to db...');
 mongoose
-    .connect('mongodb://mongodb/store', {
+    .connect(`mongodb://mongodb/${process.env.KEY_VALUE_DB}`, {
         auth: {
-            username: 'kamrul',
-            password: 'root',
+            username: process.env.KEY_VALUE_USER,
+            password: process.env.KEY_VALUE_PASSWORD,
         },
         connectTimeoutMS: 500,
     })
     .then(() => {
         console.log('Connected to DB');
-        app.listen(3000, () => {
-            console.log('Server listening on port 3000');
+        app.listen(port, () => {
+            console.log(`Server listening on port ${port}`);
         });
     })
     .catch((err) => {
