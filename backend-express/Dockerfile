@@ -1,14 +1,16 @@
-FROM node:22-alpine 
+FROM node:22-alpine
 
-WORKDIR /app 
+WORKDIR /app
 
-COPY package*.json .
+COPY package*.json ./
 
-RUN npm i
+# build tools install
+RUN apk add --no-cache python3 make g++ \
+    && npm ci
 
 COPY . .
 
 EXPOSE 3000
 
-CMD [ "npm", "start" ]
+CMD ["npm", "start"]
 

@@ -1,1 +1,4 @@
 node_modules
+start-backend.sh
+.env.container
+.env.network
